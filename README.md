@@ -14,3 +14,10 @@
 
 ## פיתוח
 עורכים את `src/app.html` ומריצים `./build.sh` כדי לבנות את `index.html`.
+
+## גרסת iOS מקורית (SwiftUI + Liquid Glass)
+בתיקייה `ios/Goals` יש אפליקציית iOS 26 מלאה עם Liquid Glass אמיתי של אפל.
+
+1. פותחים את `ios/Goals/Goals.xcodeproj` ב-Xcode 26 ומעלה (על Mac).
+2. בוחרים את הפרויקט ← Signing & Capabilities ← Team (מספיק Apple ID חינמי), ומשנים את ה-Bundle Identifier למשהו ייחודי.
+3. מחברים את האייפון (iOS 26), בוחרים אותו למעלה ולוחצים ▶︎.
