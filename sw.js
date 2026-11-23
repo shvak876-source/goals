@@ -1,6 +1,6 @@
 // Offline-first: everything is served from the cache instantly, and refreshed
 // from the network in the background so the next launch gets any update.
-const CACHE = 'goals-v2';
+const CACHE = 'goals-v3';
 const ASSETS = [
   './',
   './index.html',
