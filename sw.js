@@ -1,17 +1,53 @@
-// Offline support: network-first for the page, cache-first for static files.
-const CACHE = 'goals-v1';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './icons/icon.svg', './icons/apple-touch-icon.png', './icons/icon-192.png', './icons/icon-512.png'];
-self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting())); });
-self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
+// Offline-first: everything is served from the cache instantly, and refreshed
+// from the network in the background so the next launch gets any update.
+const CACHE = 'goals-v2';
+const ASSETS = [
+  './',
+  './index.html',
+  './manifest.webmanifest',
+  './icons/icon.svg',
+  './icons/apple-touch-icon.png',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+];
+
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open(CACHE)
+      .then((c) => c.addAll(ASSETS.map((u) => new Request(u, { cache: 'reload' }))))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
+});
+
 self.addEventListener('fetch', (e) => {
   const req = e.request;
-  if (req.method !== 'GET') return;
-  if (req.mode === 'navigate') {
-    e.respondWith(fetch(req).then((r) => { const copy = r.clone(); caches.open(CACHE).then((c) => c.put('./index.html', copy)); return r; }).catch(() => caches.match('./index.html')));
-    return;
-  }
-  e.respondWith(caches.match(req).then((hit) => hit || fetch(req).then((r) => {
-    if (r.ok && new URL(req.url).origin === location.origin) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
-    return r;
-  }).catch(() => hit)));
+  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+
+  // Every page navigation is the single-page app.
+  const key = req.mode === 'navigate' ? './index.html' : req;
+
+  e.respondWith(
+    caches.open(CACHE).then(async (cache) => {
+      const cached = await cache.match(key, { ignoreSearch: true });
+      const network = fetch(req)
+        .then((res) => {
+          if (res && res.ok) cache.put(key, res.clone());
+          return res;
+        })
+        .catch(() => undefined);
+      if (cached) {
+        e.waitUntil(network);
+        return cached;
+      }
+      return (await network) || new Response('אין חיבור לאינטרנט', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    })
+  );
 });

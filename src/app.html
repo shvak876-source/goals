@@ -1,8 +1,5 @@
 <title>מטרות היום</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap">
 <style>
 /* Layout: one-column iOS-style screen; floating Liquid Glass dock (tab bar + round add button) over a soft color field */
 :root {
@@ -32,8 +29,8 @@
   --glass-shadow: 0 10px 30px rgba(20, 40, 30, 0.16), 0 2px 6px rgba(20, 40, 30, 0.08);
   --glass-pill: rgba(255, 255, 255, 0.7);
   --backdrop: rgba(10, 20, 15, 0.28);
-  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Hebrew", "Heebo", "Arial Hebrew", system-ui, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Hebrew", "Heebo", "Arial Hebrew", system-ui, sans-serif;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Hebrew", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Hebrew", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
   --r-card: 22px;
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -117,7 +114,7 @@ input { font: inherit; color: inherit; }
 
 /* ambient color field so the glass has something to refract */
 .field { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-.field i { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.85; }
+.field i { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.45; }
 .field i:nth-child(1) { width: 70vw; height: 70vw; max-width: 520px; max-height: 520px; background: var(--bg-tint-1); top: -18vw; right: -20vw; }
 .field i:nth-child(2) { width: 60vw; height: 60vw; max-width: 460px; max-height: 460px; background: var(--bg-tint-2); top: 38%; left: -25vw; }
 .field i:nth-child(3) { width: 55vw; height: 55vw; max-width: 420px; max-height: 420px; background: var(--bg-tint-3); bottom: -20vw; right: -10vw; opacity: 0.6; }
@@ -162,87 +159,66 @@ input { font: inherit; color: inherit; }
 }
 
 /* ---------- Header ---------- */
-.top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-top: 18px; }
-.top-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.date { font-size: 15px; font-weight: 600; color: var(--accent); letter-spacing: 0.01em; }
-.hdate { font-size: 13px; color: var(--fg-3); font-weight: 500; }
-h1 { font-family: var(--font-display); font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; margin: 6px 0 0; text-wrap: balance; }
-.icon-btn { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; flex: none; }
-.icon-btn svg { width: 22px; height: 22px; }
+.top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-top: 22px; }
+.top-text { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.date { font-size: 15px; font-weight: 600; color: var(--accent); }
+.date span { color: var(--fg-3); font-weight: 500; }
+h1 { font-family: var(--font-display); font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.greet { text-align: start; border-radius: 10px; }
+.status { display: flex; align-items: center; gap: 6px; color: var(--fg-2); font-size: 15px; font-weight: 500; margin-top: -6px; font-variant-numeric: tabular-nums; }
+.status svg { width: 14px; height: 14px; color: var(--accent); }
+.status .sep { color: var(--fg-3); }
 
-/* ---------- Summary ring ---------- */
-.summary {
-  display: flex; align-items: center; gap: 18px;
-  background: var(--surface); border-radius: var(--r-card); padding: 18px;
-  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
-}
-.ring { position: relative; width: 104px; height: 104px; flex: none; }
+/* ---------- Progress ring (small, in the header) ---------- */
+.ring { position: relative; width: 62px; height: 62px; flex: none; }
 .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
 .ring .track { stroke: var(--accent-soft); }
 .ring .prog { stroke: url(#ringGrad); transition: stroke-dashoffset 0.8s var(--ease); }
-.ring-label { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
-.ring-label b { font-family: var(--font-display); font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; display: block; line-height: 1; }
-.ring-label small { font-size: 11px; color: var(--fg-2); font-weight: 600; }
-.summary-text { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.summary-text strong { font-size: 19px; font-weight: 700; }
-.summary-text span { color: var(--fg-2); font-size: 15px; }
-.streak-chip { align-self: flex-start; margin-top: 6px; display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 700; }
-.streak-chip svg { width: 14px; height: 14px; }
-.summary.celebrate .ring { animation: pop 0.7s var(--spring); }
-@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.ring-label { position: absolute; inset: 0; display: grid; place-items: center; font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.ring.celebrate { animation: pop 0.7s var(--spring); }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.18); } 100% { transform: scale(1); } }
 
-/* ---------- Goals list ---------- */
-.section-head { display: flex; align-items: baseline; justify-content: space-between; padding: 4px 4px 0; }
-.section-head h2 { font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
-.section-head span { font-size: 14px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
-.goals { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.goal { background: var(--surface); border-radius: var(--r-card); overflow: hidden; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); animation: rowIn 0.35s var(--ease) both; }
-@keyframes rowIn { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
-.row { display: flex; align-items: center; gap: 12px; padding: 14px 14px 14px 8px; min-height: 60px; }
-.row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: start; padding: 4px 0; }
-.row-title { font-size: 17px; font-weight: 600; overflow-wrap: anywhere; transition: color 0.3s; }
-.row-meta { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--fg-2); font-weight: 500; }
-.row-meta svg { width: 13px; height: 13px; }
-.done > .row .row-title, .sub.done .sub-title { color: var(--fg-3); text-decoration: line-through; text-decoration-color: var(--fg-3); }
-.chev { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: var(--fg-3); flex: none; }
-.chev svg { width: 18px; height: 18px; transition: transform 0.3s var(--ease); }
+/* ---------- Goals list: one grouped surface, hairline separators ---------- */
+.goals { list-style: none; margin: 4px 0 0; padding: 0; background: var(--surface); border-radius: var(--r-card); overflow: hidden; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+.goal { position: relative; animation: rowIn 0.35s var(--ease) both; }
+.goal + .goal::before { content: ""; position: absolute; top: 0; inset-inline-start: 58px; inset-inline-end: 0; height: 1px; background: var(--line); }
+@keyframes rowIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.row { display: flex; align-items: center; gap: 6px; padding: 6px 8px 6px 10px; min-height: 58px; }
+.row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: start; padding: 8px 0; }
+.row-title { font-size: 17px; font-weight: 500; overflow-wrap: anywhere; transition: color 0.3s; }
+.row-meta { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--fg-3); font-weight: 500; }
+.row-meta svg { width: 12px; height: 12px; }
+.row-meta span + svg { margin-inline-start: 4px; }
+.goal.done > .row .row-title, .sub.done .sub-title { color: var(--fg-3); text-decoration: line-through; text-decoration-color: var(--fg-3); }
+.chev { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; color: var(--fg-3); flex: none; }
+.chev svg { width: 17px; height: 17px; transition: transform 0.3s var(--ease); }
 .goal.open .chev svg { transform: rotate(180deg); }
-.more { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: var(--fg-2); flex: none; }
-.more svg { width: 20px; height: 20px; }
 
 /* circular check */
-.check { width: 30px; height: 30px; flex: none; border-radius: 50%; position: relative; display: grid; place-items: center; }
+.check { width: 28px; height: 28px; flex: none; border-radius: 50%; position: relative; display: grid; place-items: center; }
 .check::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--fg-3); transition: border-color 0.2s, transform 0.3s var(--spring); }
 .check::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(145deg, var(--accent-2), var(--accent)); transform: scale(0); transition: transform 0.35s var(--spring); }
-.check svg { position: relative; z-index: 1; width: 16px; height: 16px; stroke: var(--accent-ink); stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset 0.3s 0.1s var(--ease); }
+.check svg { position: relative; z-index: 1; width: 15px; height: 15px; stroke: var(--accent-ink); stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset 0.3s 0.1s var(--ease); }
 .check.on::before { border-color: transparent; }
 .check.on::after { transform: scale(1); }
 .check.on svg { stroke-dashoffset: 0; }
 .check:active::before { transform: scale(0.88); }
-.check.sm { width: 24px; height: 24px; }
-.check.sm svg { width: 13px; height: 13px; }
-.check-hit { width: 48px; height: 48px; display: grid; place-items: center; flex: none; margin-inline-start: -2px; }
+.check.sm { width: 22px; height: 22px; }
+.check.sm svg { width: 12px; height: 12px; }
+.check-hit { width: 44px; height: 44px; display: grid; place-items: center; flex: none; }
 
-.subs { list-style: none; margin: 0; padding: 0 0 8px; display: none; }
+.subs { list-style: none; margin: 0; padding: 0 0 6px; display: none; }
 .goal.open .subs { display: block; }
-.sub { display: flex; align-items: center; gap: 6px; padding-inline: 16px 14px; min-height: 46px; position: relative; }
-.sub .check-hit { width: 44px; height: 44px; margin-inline-start: 18px; }
-.sub-title { flex: 1; min-width: 0; font-size: 16px; overflow-wrap: anywhere; }
-.sub::before { content: ""; position: absolute; inset-inline-start: 62px; inset-inline-end: 14px; top: 0; height: 1px; background: var(--line); }
-.sub-del { width: 30px; height: 30px; display: grid; place-items: center; color: var(--fg-3); border-radius: 50%; }
-.sub-del svg { width: 14px; height: 14px; }
-.sub-add { display: flex; align-items: center; gap: 10px; padding-inline: 16px 14px; min-height: 46px; position: relative; }
-.sub-add::before { content: ""; position: absolute; inset-inline-start: 62px; inset-inline-end: 14px; top: 0; height: 1px; background: var(--line); }
-.sub-add .plus { width: 24px; height: 24px; margin-inline-start: 28px; margin-inline-end: 6px; border-radius: 50%; display: grid; place-items: center; color: var(--accent); flex: none; }
-.sub-add .plus svg { width: 18px; height: 18px; }
-.sub-add input { flex: 1; min-width: 0; border: 0; background: transparent; font-size: 16px; padding: 10px 0; outline: none; }
-.sub-add input::placeholder { color: var(--fg-3); }
+.sub { display: flex; align-items: center; gap: 6px; padding-inline: 44px 14px; min-height: 42px; }
+.sub-title { flex: 1; min-width: 0; font-size: 16px; overflow-wrap: anywhere; color: var(--fg-2); }
 
-.empty { text-align: center; padding: 40px 20px; color: var(--fg-2); display: flex; flex-direction: column; align-items: center; gap: 10px; background: var(--surface); border-radius: var(--r-card); }
-.empty svg { width: 56px; height: 56px; color: var(--accent); }
-.empty strong { color: var(--fg); font-size: 18px; }
-.hint { font-size: 13px; color: var(--fg-2); text-align: center; padding: 0 12px; }
+.empty { text-align: center; padding: 48px 20px; color: var(--fg-2); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.empty svg { width: 44px; height: 44px; color: var(--fg-3); }
+.empty strong { color: var(--fg); font-size: 17px; }
+.hint { font-size: 13px; color: var(--fg-3); text-align: center; padding: 0 12px; margin: 0; }
 .hint button { color: var(--accent); font-weight: 600; }
+.danger-zone { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.btn.danger { color: var(--danger); background: var(--heat-0); width: 100%; flex: none; }
 
 /* ---------- History ---------- */
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -342,11 +318,6 @@ button.cell:active { transform: scale(0.85); }
 .btn { flex: 1; height: 52px; border-radius: 99px; font-weight: 700; font-size: 17px; background: var(--heat-0); }
 .btn.primary { background: linear-gradient(140deg, var(--accent-2), var(--accent)); color: var(--accent-ink); }
 .btn.primary:disabled { opacity: 0.4; }
-.menu { display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; background: var(--heat-0); }
-.menu button { display: flex; align-items: center; gap: 12px; padding: 15px 16px; font-size: 17px; text-align: start; }
-.menu button + button { border-top: 1px solid var(--line); }
-.menu button svg { width: 22px; height: 22px; color: var(--accent); flex: none; }
-.menu button.danger, .menu button.danger svg { color: var(--danger); }
 .sheet .btn.cancel { margin-top: 10px; width: 100%; flex: none; }
 .day-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .day-list li { display: flex; align-items: center; gap: 10px; padding: 8px 4px; font-size: 16px; }
@@ -380,29 +351,17 @@ button.cell:active { transform: scale(0.85); }
     <header class="top">
       <div class="top-text">
         <div class="date" id="date"></div>
-        <div class="hdate" id="hdate"></div>
-        <h1 id="greet"></h1>
+        <h1><button class="greet" id="greet" aria-label="שינוי שם"></button></h1>
       </div>
-      <button class="icon-btn glass" id="settings-btn" aria-label="הגדרות">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>
-      </button>
+      <div class="ring" id="ring" role="img" aria-label="התקדמות היום">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="50" fill="none" stroke-width="16"></circle><circle class="prog" id="ring-prog" cx="60" cy="60" r="50" fill="none" stroke-width="16" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle></svg>
+        <div class="ring-label" id="ring-pct">0%</div>
+      </div>
     </header>
+    <div class="status" id="status"></div>
 
-    <div class="summary" id="summary">
-      <div class="ring">
-        <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="50" fill="none" stroke-width="14"></circle><circle class="prog" id="ring-prog" cx="60" cy="60" r="50" fill="none" stroke-width="14" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle></svg>
-        <div class="ring-label"><div><b id="ring-pct">0%</b><small>הושלם</small></div></div>
-      </div>
-      <div class="summary-text">
-        <strong id="sum-title"></strong>
-        <span id="sum-sub"></span>
-        <div class="streak-chip" id="streak-chip"></div>
-      </div>
-    </div>
-
-    <div class="section-head"><h2>המטרות שלי</h2><span id="goal-count"></span></div>
     <ul class="goals" id="goals"></ul>
-    <p class="hint" id="seed-hint" hidden>אלה מטרות לדוגמה. אפשר למחוק אותן דרך הכפתור ⋯ או <button id="clear-seed">לנקות הכול</button>.</p>
+    <p class="hint" id="seed-hint" hidden>אלה מטרות לדוגמה · <button id="clear-seed">ניקוי</button></p>
   </section>
 
   <section class="view" id="view-history" hidden>
@@ -469,14 +428,11 @@ button.cell:active { transform: scale(0.85); }
       <button type="button" class="btn" id="add-cancel">ביטול</button>
       <button type="submit" class="btn primary" id="add-save">הוספה</button>
     </div>
+    <div class="danger-zone" id="danger-zone" hidden>
+      <button type="button" class="btn danger" id="del-today">מחיקה</button>
+      <button type="button" class="btn danger" id="del-all" hidden>מחיקה והפסקת החזרה היומית</button>
+    </div>
   </form>
-</div>
-
-<div class="sheet glass" id="sheet-menu" dir="rtl" role="dialog" aria-modal="true" aria-labelledby="menu-title" hidden>
-  <div class="grabber"></div>
-  <h2 id="menu-title"></h2>
-  <div class="menu" id="menu"></div>
-  <button class="btn cancel" data-close>ביטול</button>
 </div>
 
 <div class="sheet glass" id="sheet-day" dir="rtl" role="dialog" aria-modal="true" aria-labelledby="day-title" hidden>
@@ -608,30 +564,28 @@ button.cell:active { transform: scale(0.85); }
     const now = new Date();
     const k = keyOf(now);
     const day = ensureDay(k);
-    $('#date').textContent = fmtDay.format(now);
-    $('#hdate').textContent = fmtHeb ? fmtHeb.format(now) : '';
+    $('#date').innerHTML = `${esc(fmtDay.format(now))}${fmtHeb ? ` <span>· ${esc(fmtHeb.format(now))}</span>` : ''}`;
     $('#greet').textContent = S.name ? `${greeting(now.getHours())}, ${S.name}` : greeting(now.getHours());
 
     const st = dayStats(k);
-    const pct = Math.round(st.ratio * 100);
     $('#ring-prog').style.strokeDashoffset = String(314.16 * (1 - st.ratio));
-    $('#ring-pct').textContent = `${pct}%`;
-    if (!st.total) { $('#sum-title').textContent = 'עוד אין מטרות להיום'; $('#sum-sub').textContent = 'לחץ על + כדי להוסיף את הראשונה'; }
-    else if (st.complete) { $('#sum-title').textContent = 'השלמת הכול!'; $('#sum-sub').textContent = `${st.done} מתוך ${st.total} מטרות`; }
-    else { $('#sum-title').textContent = `נשארו ${st.total - st.done === 1 ? 'מטרה אחת' : `${st.total - st.done} מטרות`}`; $('#sum-sub').textContent = `${st.done} מתוך ${st.total} הושלמו`; }
+    $('#ring-pct').textContent = `${Math.round(st.ratio * 100)}%`;
+    $('#ring').setAttribute('aria-label', `${st.done} מתוך ${st.total} מטרות הושלמו`);
     const s = streaks();
-    $('#streak-chip').innerHTML = `${ICON.flame} ${s.cur === 0 ? 'מתחילים רצף היום' : s.cur === 1 ? 'יום אחד ברצף' : `${s.cur} ימים ברצף`}`;
-    $('#goal-count').textContent = st.total ? `${st.done}/${st.total}` : '';
+    const parts = [];
+    parts.push(!st.total ? 'אין עדיין מטרות להיום' : st.complete ? 'השלמת הכול' : `${st.done} מתוך ${st.total} הושלמו`);
+    if (s.cur > 0) parts.push(`${ICON.flame}<span>${s.cur === 1 ? 'יום אחד ברצף' : `${s.cur} ימים ברצף`}</span>`);
+    $('#status').innerHTML = parts.map((p, i) => (i ? '<span class="sep">·</span>' : '') + (i ? p : `<span>${p}</span>`)).join('');
 
     if (lastComplete === false && st.complete) {
-      const el = $('#summary'); el.classList.remove('celebrate'); void el.offsetWidth; el.classList.add('celebrate');
+      const el = $('#ring'); el.classList.remove('celebrate'); void el.offsetWidth; el.classList.add('celebrate');
       toast('כל הכבוד! עמדת בכל המטרות להיום');
     }
     lastComplete = st.complete;
 
     const list = $('#goals');
     if (!day.goals.length) {
-      list.innerHTML = `<li class="empty">${ICON.target}<strong>יום חדש, דף חלק</strong><span>הוסף מטרה ראשונה בכפתור + למטה</span></li>`;
+      list.innerHTML = `<li class="empty">${ICON.target}<strong>יום חדש, דף חלק</strong><span>לחץ על + כדי להוסיף מטרה</span></li>`;
     } else {
       list.innerHTML = day.goals.map((g) => {
         const done = goalDone(g);
@@ -643,21 +597,18 @@ button.cell:active { transform: scale(0.85); }
         return `<li class="goal${done ? ' done' : ''}${open ? ' open' : ''}" data-id="${g.id}">
           <div class="row">
             <button class="check-hit" data-act="toggle" aria-label="${done ? 'ביטול סימון' : 'סימון כבוצע'}: ${esc(g.text)}" aria-pressed="${done}"><span class="check${done ? ' on' : ''}">${ICON.check}</span></button>
-            <button class="row-main" data-act="${g.subs.length ? 'expand' : 'toggle'}">
+            <button class="row-main" data-act="edit" aria-label="עריכה: ${esc(g.text)}">
               <span class="row-title">${esc(g.text)}</span>
               ${meta.length ? `<span class="row-meta">${meta.join('')}</span>` : ''}
             </button>
-            ${g.subs.length ? `<button class="chev" data-act="expand" aria-label="${open ? 'סגירה' : 'פתיחה'}" aria-expanded="${open}">${ICON.chev}</button>` : ''}
-            <button class="more" data-act="more" aria-label="אפשרויות">${ICON.more}</button>
+            ${g.subs.length ? `<button class="chev" data-act="expand" aria-label="${open ? 'הסתרת תתי־מטרות' : 'הצגת תתי־מטרות'}" aria-expanded="${open}">${ICON.chev}</button>` : ''}
           </div>
-          <ul class="subs">
+          ${g.subs.length ? `<ul class="subs">
             ${g.subs.map((x) => `<li class="sub${x.done ? ' done' : ''}" data-sid="${x.id}">
               <button class="check-hit" data-act="toggle-sub" aria-label="${esc(x.text)}" aria-pressed="${x.done}"><span class="check sm${x.done ? ' on' : ''}">${ICON.check}</span></button>
               <span class="sub-title">${esc(x.text)}</span>
-              <button class="sub-del" data-act="del-sub" aria-label="מחיקת תת־מטרה">${ICON.x}</button>
             </li>`).join('')}
-            <li class="sub-add"><span class="plus">${ICON.plus}</span><input data-act="new-sub" placeholder="תת־מטרה חדשה" maxlength="100" enterkeyhint="done" aria-label="תת־מטרה חדשה"></li>
-          </ul>
+          </ul>` : ''}
         </li>`;
       }).join('');
     }
@@ -673,7 +624,7 @@ button.cell:active { transform: scale(0.85); }
 
   $('#goals').addEventListener('click', (e) => {
     const btn = e.target.closest('[data-act]');
-    if (!btn || btn.tagName === 'INPUT') return;
+    if (!btn) return;
     const li = btn.closest('.goal'); if (!li) return;
     const g = findGoal(li.dataset.id); if (!g) return;
     const act = btn.dataset.act;
@@ -683,27 +634,15 @@ button.cell:active { transform: scale(0.85); }
     } else if (act === 'toggle-sub') {
       const s = g.subs.find((x) => x.id === btn.closest('.sub').dataset.sid);
       s.done = !s.done; g.done = goalDone(g);
-    } else if (act === 'del-sub') {
-      g.subs = g.subs.filter((x) => x.id !== btn.closest('.sub').dataset.sid);
-      syncTemplate(g);
     } else if (act === 'expand') {
       collapsed.has(g.id) ? collapsed.delete(g.id) : collapsed.add(g.id);
       li.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(li.classList.contains('open')));
       return;
-    } else if (act === 'more') {
-      openMenu(g); return;
+    } else if (act === 'edit') {
+      openAdd(g); return;
     }
     save(); renderToday();
-  });
-  $('#goals').addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter' || e.target.dataset.act !== 'new-sub') return;
-    e.preventDefault();
-    const text = e.target.value.trim(); if (!text) return;
-    const g = findGoal(e.target.closest('.goal').dataset.id);
-    g.subs.push({ id: uid(), text, done: false }); g.done = goalDone(g); syncTemplate(g);
-    collapsed.delete(g.id);
-    save(); renderToday();
-    const inp = document.querySelector(`.goal[data-id="${g.id}"] [data-act="new-sub"]`); if (inp) inp.focus();
   });
   $('#clear-seed').addEventListener('click', () => {
     ensureDay(todayKey()).goals = []; S.seeded = false; save(); renderToday();
@@ -749,8 +688,11 @@ button.cell:active { transform: scale(0.85); }
     $('#goal-repeat').checked = g ? !!g.tid : false;
     $('#sub-inputs').innerHTML = '';
     if (g) g.subs.forEach((s) => subInput(s.text));
+    $('#danger-zone').hidden = !g;
+    $('#del-today').textContent = g && g.tid ? 'מחיקה מהיום בלבד' : 'מחיקת המטרה';
+    $('#del-all').hidden = !(g && g.tid);
     showSheet($('#sheet-add'));
-    setTimeout(() => $('#goal-text').focus(), 60);
+    if (!g) setTimeout(() => $('#goal-text').focus(), 60);
   }
   $('#fab').addEventListener('click', () => openAdd());
   $('#add-cancel').addEventListener('click', () => hideSheet());
@@ -793,40 +735,20 @@ button.cell:active { transform: scale(0.85); }
     }
   }
 
-  // action menu
-  function openMenu(g) {
-    $('#menu-title').textContent = g.text;
-    const items = [
-      ['edit', ICON.edit, 'עריכה'],
-      ['sub', ICON.plus, 'הוספת תת־מטרה'],
-      ['repeat', ICON.repeat, g.tid ? 'הפסקת חזרה יומית' : 'חזרה כל יום'],
-      ['del', ICON.trash, g.tid ? 'מחיקה מהיום בלבד' : 'מחיקה', 'danger'],
-    ];
-    if (g.tid) items.push(['del-all', ICON.trash, 'מחיקה והפסקת חזרה', 'danger']);
-    const menu = $('#menu');
-    menu.innerHTML = items.map(([a, ic, l, c]) => `<button data-m="${a}" class="${c || ''}">${ic}<span>${l}</span></button>`).join('');
-    menu.onclick = (e) => {
-      const b = e.target.closest('[data-m]'); if (!b) return;
-      const day = ensureDay(todayKey());
-      const a = b.dataset.m;
-      if (a === 'edit') { openAdd(g); return; }
-      if (a === 'sub') {
-        hideSheet(); collapsed.delete(g.id); renderToday();
-        const inp = document.querySelector(`.goal[data-id="${g.id}"] [data-act="new-sub"]`);
-        if (inp) { inp.closest('.goal').classList.add('open'); setTimeout(() => inp.focus(), 50); }
-        return;
-      }
-      if (a === 'repeat') { setRepeat(g, !g.tid); toast(g.tid ? 'המטרה תחזור כל יום' : 'החזרה היומית הופסקה'); }
-      if (a === 'del') day.goals = day.goals.filter((x) => x.id !== g.id);
-      if (a === 'del-all') { setRepeat(g, false); day.goals = day.goals.filter((x) => x.id !== g.id); }
-      if (!day.goals.length) S.seeded = false;
-      save(); hideSheet(); renderToday();
-    };
-    showSheet($('#sheet-menu'));
+  // delete from the edit sheet
+  function deleteEditing(stopRepeat) {
+    const g = editing; if (!g) return;
+    const day = ensureDay(todayKey());
+    if (stopRepeat) setRepeat(g, false);
+    day.goals = day.goals.filter((x) => x.id !== g.id);
+    if (!day.goals.length) S.seeded = false;
+    save(); hideSheet(); renderToday();
   }
+  $('#del-today').addEventListener('click', () => deleteEditing(false));
+  $('#del-all').addEventListener('click', () => deleteEditing(true));
 
   // settings
-  $('#settings-btn').addEventListener('click', () => { $('#set-name').value = S.name || ''; showSheet($('#sheet-settings')); });
+  $('#greet').addEventListener('click', () => { $('#set-name').value = S.name || ''; showSheet($('#sheet-settings')); });
   $('#set-form').addEventListener('submit', (e) => { e.preventDefault(); S.name = $('#set-name').value.trim(); save(); hideSheet(); renderToday(); });
 
   // ---------- history ----------
@@ -914,7 +836,7 @@ button.cell:active { transform: scale(0.85); }
   save();
   renderToday();
 
-  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  if ('serviceWorker' in navigator && window.isSecureContext && location.protocol !== 'file:') {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 })();
